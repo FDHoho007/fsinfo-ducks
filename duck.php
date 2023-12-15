@@ -40,7 +40,7 @@ $month = $_GET["month"] ?? date("n");
 
 <main>
 
-    <?php echo("<h1>$duckName</h1><img alt=\"$duckName\" src=\"" . (file_exists("img/$duckName.png") ? "img/$duckName.png" : "img/default.png") . "\">"); ?>
+    <?php echo("<h1>$duckName</h1><img alt=\"$duckName\" src=\"" . (file_exists("img/$duckName.png") ? "img/$duckName.png" : "img/duck.png") . "\">"); ?>
 
     <form method="get">
         <?php if (isset($_GET["pwd"])) echo("<input type=\"hidden\" name=\"pwd\" value=\"" . $_GET["pwd"] . "\">"); ?>

@@ -6,3 +6,4 @@ COPY duck.php /var/www/html
 COPY lib.php /var/www/html
 COPY style.css /var/www/html
 COPY img /var/www/html
+VOLUME /var/www/html/ducks
