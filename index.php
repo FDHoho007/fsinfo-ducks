@@ -17,7 +17,7 @@
 
 <main>
 
-<h1>FSinfo Enten</h1>
+<h1 id="logo-heading"><img id="logo" src="img/logo.png"> Enten</h1>
 <p>Hier findest du die Geschichten, der Enten der Fachschaft Info der Universität Passau.<br>
     Um die Geschichte einer Ente weiterzuschreiben, halte dein (NFC-fähiges) SmartPhone an ihr Halstuch.</p>
 
