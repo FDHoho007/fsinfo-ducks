@@ -53,7 +53,7 @@ if ($isAdmin) {
 <?php }
 
 echo("<div class=\"ducks\">");
-foreach ($db->queryAll("SELECT * FROM ducks ORDER BY name DESC;") as $duck) {
+foreach ($db->queryAll("SELECT * FROM ducks ORDER BY name ASC;") as $duck) {
     $duckName = $duck["name"];
     echo("<a class=\"duck\" href=\"/" . str_replace(" ", "_", strtolower($duckName)) . ($isAdmin ? "?pwd=" . $_GET["pwd"] : "") . "\">");
     echo("<img alt=\"$duckName\" src=\"" . (file_exists("ducks/$duckName.png") ? "ducks/$duckName.png" : "img/duck.png") . "\">$duckName");
