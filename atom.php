@@ -1,7 +1,7 @@
 <?php
 global $db;
 require "lib.php";
-header("Content-Type: text/xml");
+header("Content-Type: application/atom+xml");
 echo("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 echo("<feed xmlns=\"http://www.w3.org/2005/Atom\">");
 echo("<title>Enten Tagebücher</title>");

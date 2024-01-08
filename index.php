@@ -10,6 +10,7 @@
     <title>FSinfo Enten</title>
     <meta name="author" content="Fabian Dietrich">
     <link rel="stylesheet" href="style.css">
+    <link rel="alternate" type="application/atom+xml" href="/atom.php">
 
 </head>
 
