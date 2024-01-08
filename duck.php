@@ -104,13 +104,15 @@ $month = $_GET["month"] ?? date("n");
     foreach ($db->queryAll("SELECT id, YEAR(timestamp) AS year, MONTH(timestamp) AS month, DAY(timestamp) AS day, HOUR(timestamp) AS hour, MINUTE(timestamp) AS minute, author, entry FROM diary WHERE duck=? AND YEAR(timestamp)=? AND MONTH(timestamp)=? ORDER BY timestamp " . ($order == "latest-first" ? "DESC" : "ASC") . ";", $duckName, $year, $month) as $entry) {
         $date = zeroPad($entry["day"]) . "." . zeroPad($entry["month"]) . "." . zeroPad($entry["year"]);
         $time = zeroPad($entry["hour"]) . ":" . zeroPad($entry["minute"]); ?>
-        <div class="diary-entry">
+        <div id="<?php echo($entry["id"]); ?>" class="diary-entry">
             <div class="meta">
                 <?php echo($entry["author"] . " schrieb am $date um $time:"); ?>
+                <?php if($isAdmin) { ?>
                 <form method="post" style="float: right;">
                     <input type="hidden" name="id" value="<?php echo($entry["id"]); ?>">
                     <button type="submit" name="delete">Löschen</button>
                 </form>
+                <?php } ?>
             </div>
             <div class="content"><?php echo $entry["entry"]; ?></div>
         </div>
