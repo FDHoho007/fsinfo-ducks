@@ -1,3 +1,4 @@
+<?php require_once "includes/autoload.php"; ?>
 <!doctype html>
 <html lang="de">
 
@@ -7,71 +8,79 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="noindex,nofollow">
     <title>FSinfo Enten</title>
     <meta name="author" content="Fabian Dietrich">
-    <link rel="stylesheet" href="style.css">
+    <meta name="description"
+          content="Hier findest du die Geschichten, der Enten der Fachschaft Info der Universität Passau.">
+    <link rel="stylesheet" href="/assets/style.css">
     <link rel="alternate" type="application/atom+xml" href="/atom.php">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/session.js"></script>
+    <script src="assets/js/postings.js"></script>
+
+    <script>
+        const CSRF_TOKEN="<?= $_SESSION["csrf_token"] ?>";
+        const DUCK=null;
+        const BIOGRAPHY_MAX_LENGTH=<?= BIOGRAPHY_MAX_LENGTH ?>;
+        const POSTING_MAX_LENGTH=<?= POSTING_MAX_LENGTH ?>;
+        const AUTHOR_MAX_LENGTH=<?= AUTHOR_MAX_LENGTH ?>;
+    </script>
 
 </head>
 
 <body>
 
-<main>
+<div id="page-wrapper">
+    <header>
+        <button id="menu-toggle">☰</button>
+        <a id="page-title" href="/"><img id="logo-img" alt="FSinfo" src="/assets/fsinfo.png"> Enten</a>
+        <div id="user-options">
+            <img id="user-menu-toggle" class="profile-picture-small" alt="Account" src="/uploads/<?php echo(DEFAULT_DUCK_PICTURE); ?>.png">
+            <ul id="user-menu">
+                <?php if(isAdmin()): ?>
+                <li><a>als Admin angemeldet</a></li>
+                <?php else: if(isModerator()): ?>
+                <li><a>als Mod angemeldet</a></li>
+                <?php else: ?>
+                <li><a>nicht angemeldet</a></li>
+                <?php endif; endif; ?>
+                <li><a href="#" onclick="showDuckLoginDialog();">Mit Ente anmelden</a></li>
+                <li><a href="#" onclick="showKeyDialog();">Berechtigungsschlüssel verwenden</a></li>
+                <?php if(isAdmin() || isModerator()): ?>
+                <li><a href="#" onclick="showLogoutDialog();">Abmelden</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
 
-<h1 id="logo-heading"><img id="logo" src="img/logo.png"> Enten</h1>
-<p>Hier findest du die Geschichten, der Enten der Fachschaft Info der Universität Passau.<br>
-    Um die Geschichte einer Ente weiterzuschreiben, halte dein (NFC-fähiges) SmartPhone an ihr Halstuch.</p>
+    </header>
 
-<?php
+    <nav>
+        <ul>
+        <?php foreach(getDucks() as $navDuck): ?>
+            <li>
+                <a href="/<?= $navDuck["id"] ?>">
+                    <img class="profile-picture-small" alt="Profilbild" src="<?= $navDuck["picture"] ?>">
+                    <?= $navDuck["displayName"] ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+    </nav>
 
-global $db, $isAdmin, $isAuthorized;
-require "lib.php";
-
-if ($isAdmin) {
-    if (isset($_POST["name"])) {
-        if (isset($_POST["create"])) {
-            if ($db->query("SELECT * FROM ducks WHERE name=?;", $_POST["name"])) {
-                echo("<div class=\"error-message\">\"" . $_POST["name"] . "\" ist bereits Teil der FSinfo.</div>");
-            } else {
-                $password = randomPassword();
-                $db->exec("INSERT INTO ducks VALUES (?, ?);", $_POST["name"], $password);
-                echo("<div class=\"success-message\">\"" . $_POST["name"] . "\" quietscht nun für die FSinfo. Ihr Passwort lautet: $password</div>");
-            }
-        } else if (isset($_POST["delete"])) {
-            if ($db->query("SELECT * FROM ducks WHERE name=?;", $_POST["name"])) {
-                $db->exec("DELETE FROM ducks WHERE name=?;", $_POST["name"]);
-                echo("<div class=\"success-message\">Die Ente \"" . $_POST["name"] . "\" wurde in die Freiheit entlassen.</div>");
-            } else {
-                echo("<div class=\"error-message\">Es existiert in der FSinfo keine Ente mit diesem Namen.</div>");
-            }
-        }
-    }
-    ?>
-    <form method="post">
-        <input type="text" name="name" placeholder="Name der neuen Ente" required>
-        <button type="submit" name="create">Ente hinzufügen</button>
-    </form>
-<?php }
-
-echo("<div class=\"ducks\">");
-foreach ($db->queryAll("SELECT * FROM ducks ORDER BY name ASC;") as $duck) {
-    $duckName = $duck["name"];
-    echo("<a class=\"duck\" href=\"/" . str_replace(" ", "_", strtolower($duckName)) . ($isAdmin ? "?pwd=" . $_GET["pwd"] : "") . "\">");
-    echo("<img alt=\"$duckName\" src=\"" . (file_exists("ducks/$duckName.png") ? "ducks/$duckName.png" : "img/duck.png") . "\">$duckName");
-    if($isAdmin) { ?>
-            <br><br>
-        <form method="post">
-            <input type="hidden" name="name" value="<?php echo $duckName; ?>">
-            <button type="submit" name="delete">Löschen</button>
-        </form>
-    <?php }
-    echo("</a>");
-}
-echo("</div>");
-
-?>
-
-</main>
+    <main>
+        <div id="main-header">
+            <h1>FSinfo Enten</h1>
+            <p>Hier findest du die Geschichten, der Enten der Fachschaft Info der Universität Passau. Melde dich als eine Ente an, um ihre Geschichte weiterzuschreiben.</p>
+        </div>
+        <div id="postings-list"></div>
+        <div id="postings-loader" class="lds-facebook"><div></div><div></div><div></div></div>
+    </main>
+    <div id="attachment-viewer" onclick="this.style.display='none'; document.body.classList.remove('no-scroll');">
+        <div><img alt="Anhang" src=""></div>
+    </div>
+</div>
 
 </body>
 

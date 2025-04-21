@@ -1,0 +1,383 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+#page-wrapper {
+    width: 33%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+header {
+    width: 100%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav {
+    width: 25%;
+    background: white;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+main {
+    width: 75%;
+    overflow-y: auto;
+}
+
+#page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+
+#logo-img {
+    display: inline-block;
+    height: 50px;
+    border-radius: 10px;
+    margin: 0 10px 0 0;
+}
+
+.profile-picture-big {
+    background: #828894;
+    border-radius: 100%;
+    padding: 10px;
+    height: 150px;
+    width: 150px;
+}
+
+.profile-picture-small {
+    background: #828894;
+    border-radius: 100%;
+    padding: 10px;
+    height: 44px;
+    width: 44px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav li {
+    margin-bottom: 7px;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover {
+    border-radius: 20px;
+    background: #828894;
+}
+
+nav .profile-picture-small {
+    margin-right: 5px;
+}
+
+#main-header {
+    padding: 20px;
+    text-align: center;
+}
+
+#main-header h1 {
+    margin-top: 10px;
+}
+
+#main-header p {
+    display: block;
+    width: 75%;
+    margin: auto;
+}
+
+#duck-actions {
+    margin-bottom: 25px;
+}
+
+#duck-actions a {
+    color: black;
+    padding: 0 6px;
+}
+
+#duck-biography {
+    display: flex;
+    width: 75%;
+    margin: auto;
+    align-content: center;
+    justify-content: center;
+}
+
+#duck-biography p {
+    display: block;
+    width: auto;
+    margin: 0;
+}
+
+#postings-list {
+    padding: 20px;
+}
+
+.posting, #create-post {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    border-radius: 15px;
+}
+
+#create-post {
+    margin: 30px 0 0;
+}
+
+#create-post textarea, #create-post input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    outline: none;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#create-post textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+#create-post button {
+    background: #002d95;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+#create-post button:active {
+    background: #00216e;
+}
+
+#create-post button:disabled {
+    background: gray;
+    cursor: not-allowed;
+}
+
+.posting-header {
+    display: flex;
+    align-items: center;
+}
+
+.posting-header .profile-picture-small {
+    margin-right: 7px;
+}
+
+.posting-action {
+    margin-left: auto;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.posting-content {
+    margin: 7px 0 3px;
+}
+
+.posting-attachments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.posting-attachments a {
+    height: 75px;
+    width: 75px;
+    border-radius: 10px;
+    margin: 7px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.posting-attachments a img {
+    height: 100%;
+    width: 100%;
+}
+
+.posting-footer {
+    font-size: smaller;
+}
+
+#attachment-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: #00000070
+}
+
+#attachment-viewer div {
+    width: 75%;
+    margin: 150px auto auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#attachment-viewer img {
+    width: 100%;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+#user-options {
+    position: relative;
+    display: inline-block;
+}
+
+#user-menu-toggle {
+    cursor: pointer;
+}
+
+#user-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    z-index: 1000;
+    min-width: 180px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease, visibility 0.1s ease;
+}
+
+#user-options.show-menu #user-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+#user-menu li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer; /* pointer on menu items */
+}
+
+#user-menu li a:hover {
+    background-color: #f0f0f0;
+}
+
+
+.lds-facebook,
+.lds-facebook div {
+    box-sizing: border-box;
+}
+.lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: currentColor;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0s;
+}
+@keyframes lds-facebook {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+    50%, 100% {
+        top: 24px;
+        height: 32px;
+    }
+}
+
+#postings-loader {
+    display: block;
+    margin: auto;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    #page-wrapper {
+        width: 100%;
+    }
+    header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        padding: 6px;
+    }
+    nav {
+        transform: translateX(-100%);
+        width: 250px;
+        padding: 1rem;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 63px;
+        transition: transform 0.3s ease;
+    }
+    nav.active {
+        transform: translateX(0);
+    }
+    #menu-toggle {
+        display: block;
+        height: 47px;
+        width: 35px;
+    }
+    main {
+        width: 100%;
+        margin-top: 63px;
+    }
+}
