@@ -5,7 +5,6 @@ require_once "includes/autoload.php";
 $duckId = substr($_SERVER["REQUEST_URI"], 1);
 if ($duckIdParamStart = strpos($duckId, "?"))
     $duckId = substr($duckId, 0, $duckIdParamStart);
-$duckId = "enton";
 $duck = getDuck($duckId);
 if($duck == null) {
     http_response_code(404);
