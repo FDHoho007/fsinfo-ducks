@@ -56,8 +56,8 @@ function renderPostings(array $postings): string
 
         $html .= "<div class='posting-attachments'>";
         foreach ($posting["attachments"] as $attachment) {
-            if($attachment["fileType"] == "jpg") {
-                $html .= "<a onclick='showAttachment(this);'><img alt='Bilddatei' src='/uploads/" . $attachment["id"] . ".jpg'></a>";
+            if($attachment["fileType"] == "png") {
+                $html .= "<a onclick='showAttachment(this);'><img alt='Bilddatei' src='/uploads/" . $attachment["id"] . ".png'></a>";
             }
         }
         $html .= "</div>";
