@@ -41,7 +41,7 @@ function showLogoutDialog() {
     });
 }
 
-function showDuckLoginDialog(loginPrompt = "Bitte halte den NFC Chip der Ente an dein Gerät.", afterLoginAction = () => window.location.reload()) {
+function showDuckLoginDialog(loginPrompt = "Bitte halte den NFC Chip der Ente an dein Gerät.", afterLoginAction = (result) => window.location = "/" + result) {
     if('NDEFReader' in window) {
         const reader = new NDEFReader();
         let abortController = new AbortController();
@@ -63,7 +63,7 @@ function showDuckLoginDialog(loginPrompt = "Bitte halte den NFC Chip der Ente an
                     if(key != null) {
                         api("useKey", {"key": key}).then((result) => {
                             if (result !== "false") {
-                                afterLoginAction();
+                                afterLoginAction(result);
                             } else {
                                 Swal.fire({
                                     title: "Ungültiger Schlüssel",

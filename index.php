@@ -43,8 +43,6 @@
                 <li><a>als Admin angemeldet</a></li>
                 <?php else: if(isModerator()): ?>
                 <li><a>als Mod angemeldet</a></li>
-                <?php else: ?>
-                <li><a>nicht angemeldet</a></li>
                 <?php endif; endif; ?>
                 <li><a href="#" onclick="showDuckLoginDialog();">Mit Ente anmelden</a></li>
                 <li><a href="#" onclick="showKeyDialog();">Berechtigungsschlüssel verwenden</a></li>
