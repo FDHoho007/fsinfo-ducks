@@ -117,12 +117,14 @@ if($duck == null) {
                 </button>
             <?php endif; ?>
             </div>
+            <?php if(isAdmin() || isDuckedIn($duck["id"])): ?>
             <form id="create-post" onsubmit="createPosting(this); return false;">
                 <h3 style="margin-top: 0;">Neuen Beitrag verfassen</h3>
                 <textarea name="content" placeholder="Heute hat <?= $duck["displayName"] ?> etwas ganz besonderes erlebt..." maxlength="<?= POSTING_MAX_LENGTH ?>" required></textarea>
                 <input type="text" name="author" placeholder="Dein Name" maxlength="<?= AUTHOR_MAX_LENGTH ?>" required>
                 <button type="submit">Abschicken</button>
             </form>
+            <?php endif; ?>
         </div>
         <div id="postings-list"></div>
         <div id="postings-loader" class="lds-facebook"><div></div><div></div><div></div></div>
