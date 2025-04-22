@@ -23,7 +23,7 @@ function isModerator(): bool
 
 function isDuckedIn(string $duckId): bool
 {
-    return isset($_SESSION["duck_$duckId"]) && $_SESSION["duck_$duckId"] == 1 && !getDuck($duckId)["locked"];
+    return isset($_SESSION["duck_$duckId"]) && $_SESSION["duck_$duckId"] + SESSION_TIME >= time() && !getDuck($duckId)["locked"];
 }
 
 function usePassword(string $password): string
