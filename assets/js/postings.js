@@ -129,12 +129,6 @@ function showAttachment(element) {
 
 document.addEventListener("DOMContentLoaded", function () {
     loadPostings(DUCK);
-    if(location.search && location.search.includes("pwd=")) {
-        Swal.fire({
-            title: "Neues Anmeldesystem",
-            text: "Aus Sicherheitsgründen gibt es ein neues Anmeldesystem für unsere Entchen. Bitte klicke oben rechts auf das Symbol und dann auf 'Mit Ente anmelden'."
-        });
-    }
 });
 
 window.addEventListener("scroll", () => {

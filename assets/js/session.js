@@ -1,3 +1,5 @@
+const LEGACY_MODE = true;
+
 function showKeyDialog() {
     Swal.fire({
         title: "Berechtigungsschlüssel verwenden",
@@ -117,4 +119,28 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("menu-toggle").addEventListener("click", function() {
         document.getElementsByTagName("nav")[0].classList.toggle("active");
     });
+
+    if(location.search && location.search.includes("?pwd=")) {
+        if(LEGACY_MODE) {
+            key = location.search.substring(location.search.indexOf("?pwd=") + 5);
+            if(key != null) {
+                api("useKey", {"key": key}).then((result) => {
+                    if (result !== "false") {
+                        window.location = "/" + result
+                    } else {
+                        Swal.fire({
+                            title: "Ungültiger Schlüssel",
+                            text: "Der NFC Chip dieser Ente wurde entweder noch nicht aktualisiert oder ist temporär gesperrt worden. Eine Anmeldung ist derzeit nicht möglich.",
+                            icon: "error"
+                        });
+                    }
+                });
+            }
+        } else {
+            Swal.fire({
+                title: "Neues Anmeldesystem",
+                text: "Aus Sicherheitsgründen gibt es ein neues Anmeldesystem für unsere Entchen. Bitte klicke oben rechts auf das Symbol und dann auf 'Mit Ente anmelden'."
+            });
+        }
+    }
 });
