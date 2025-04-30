@@ -105,12 +105,17 @@ function createPosting(formElement) {
     let content = formElement.querySelector("[name=content]").value;
     let author = formElement.querySelector("[name=author]").value;
     formElement.querySelector("button[type=submit]").disabled = true;
-    api("createPosting", {"duckId": DUCK, "content": content, "author": author})
-        .then((result) => result.text()).then((html) => {
+    api("createPosting", {"duckId": DUCK, "content": content, "author": author}).then((html) => {
         formElement.querySelector("[name=content]").value = "";
         formElement.querySelector("[name=author]").value = "";
         formElement.querySelector("button[type=submit]").disabled = false;
         document.getElementById("postings-list").insertAdjacentHTML("afterbegin", html);
+    }).catch((error) => {
+        formElement.querySelector("button[type=submit]").disabled = false;
+        Swal.fire({
+            title: "Fehler aufgetreten",
+            text: "Beim Abschicken des Beitrags ist ein unerwarteter Fehler aufgetreten. Bitte kontaktiere die Mama-Ente."
+        });
     });
 }
 
@@ -124,6 +129,12 @@ function showAttachment(element) {
 
 document.addEventListener("DOMContentLoaded", function () {
     loadPostings(DUCK);
+    if(location.search && location.search.includes("pwd=")) {
+        Swal.fire({
+            title: "Neues Anmeldesystem",
+            text: "Aus Sicherheitsgründen gibt es ein neues Anmeldesystem für unsere Entchen. Bitte klicke oben rechts auf das Symbol und dann auf 'Mit Ente anmelden'."
+        });
+    }
 });
 
 window.addEventListener("scroll", () => {
